@@ -40,8 +40,23 @@ mesh.rotation.x = Math.PI * 0.25;
 mesh.rotation.y = Math.PI * 0.25;
 
 // Позиция камеры
-// camera.lookAt( new THREE.Vector3(0, -1, 0))
+// camera.lookAt( new THREE.Vector3(0, 0, -1))
 // camera.lookAt( mesh.position)
+
+const group = new THREE.Group()
+group.scale.y = 0.7;
+group.rotation.x= 0.5
+scene.add(group)
+
+const cube1 = new THREE.Mesh(geometry, material)
+cube1.position.x= -1.2
+group.add(cube1)
+const cube2 = new THREE.Mesh(geometry, material)
+cube2.position.x= 0
+group.add(cube2)
+const cube3 = new THREE.Mesh(geometry, material)
+cube3.position.x= 1.2
+group.add(cube3)
 
 renderer.render(scene, camera)
 
