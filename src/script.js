@@ -24,5 +24,31 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(size.width, size.height)
 
+// Отрисовка осей
+const axesHelper = new THREE.AxesHelper(3)
+scene.add(axesHelper)
+
+
+// Передвижение куба
+mesh.position.set(-1, -0.8, 0.4)
+
+// Масштабирование куба
+mesh.scale.set(0.5, 2, 0.7)
+
+// Вращение куба
+mesh.rotation.x = Math.PI * 0.25;
+mesh.rotation.y = Math.PI * 0.25;
+
+// Позиция камеры
+// camera.lookAt( new THREE.Vector3(0, -1, 0))
+// camera.lookAt( mesh.position)
+
 renderer.render(scene, camera)
 
+
+// // длина вектора
+// console.log(mesh.position.length());
+// // длина вектора до камеры
+// console.log(mesh.position.distanceTo(camera.position));
+// // уменьшить длину вектора до 1, но оставить направление
+// console.log(mesh.position.normalize());
