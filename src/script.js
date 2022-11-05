@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import './style.css'
 
+const canvas = document.getElementById("1")
+
 // Сцена
 const scene = new THREE.Scene()
 
@@ -15,8 +17,9 @@ const size = {
     height: 600
 }
 // Камера и её позиция
-const camera = new THREE.PerspectiveCamera(75, size.width / size.height);
-camera.position.z = 3;
+// const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 1);
+const camera = new THREE.OrthographicCamera(-1, 1, 1, - 1, 0.1, 100);
+// camera.position.z = 3;
 scene.add(camera)
 
 // Создади объект отрисовщика и укажим размер
@@ -30,7 +33,7 @@ const axesHelper = new THREE.AxesHelper(3)
 scene.add(axesHelper)
 
 // Передвижение куба
-mesh.position.set(0,0,-0.4)
+mesh.position.set(0,0, -0.3)
 
 // Масштабирование куба
 mesh.scale.set(1, 1, 1)
@@ -38,22 +41,50 @@ mesh.scale.set(1, 1, 1)
 // Время
 const clock = new THREE.Clock();
 
-const animateLoop = () => {
+mesh.rotation.x = Math.PI * 0.25
+mesh.rotation.y = Math.PI * 0.25
 
-    const elapsedTime = clock.getElapsedTime()
+const cursor = {
+    x: 0,
+    y: 0,
+}
+canvas.addEventListener("mousemove", (event) => {
+    cursor.x = -(event.clientX / size.width - 0.5)
+    cursor.y = event.clientY / size.height - 0.5
+    console.log(event.clientX, event.clientY);
+})
+
+const tick = () => {
+
+    camera.position.x = Math.cos(cursor.x * Math.PI * 2) * 2
+    camera.position.z = Math.sin(cursor.x * Math.PI * 2) * 2
+    camera.position.y = cursor.y * 3
+    camera.lookAt(mesh.position)
+    // cursor.x = event.clientX / size.width - 0.5
+    // cursor.y = event.clientY / size.height - 0.5
     
-    mesh.position.x = Math.cos(elapsedTime);
-    mesh.position.y = Math.sin(elapsedTime);
-    camera.position.x = Math.cos(-elapsedTime);
-    camera.position.y = Math.sin(-elapsedTime);
-    camera.lookAt(mesh.position);
-
     renderer.render(scene, camera)
 
-    window.requestAnimationFrame(animateLoop)
+    window.requestAnimationFrame( tick)
 }
 
-animateLoop()
+tick()
+// const animateLoop = () => {
+
+//     const elapsedTime = clock.getElapsedTime()
+
+//     mesh.position.x = Math.cos(elapsedTime);
+//     mesh.position.y = Math.sin(elapsedTime);
+//     camera.position.x = Math.cos(-elapsedTime);
+//     camera.position.y = Math.sin(-elapsedTime);
+//     camera.lookAt(mesh.position);
+
+//     renderer.render(scene, camera)
+
+//     window.requestAnimationFrame(animateLoop)
+// }
+
+// animateLoop()
 
 // // Позиция камеры
 // camera.lookAt( new THREE.Vector3(0, 0, -1))
