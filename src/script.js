@@ -14,9 +14,23 @@ const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 // Размеры сцены и отрисовщика
 const size = {
-    width: 600,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
+// Обработка изменения размера
+window.addEventListener('resize', () => {
+    size.width = window.innerWidth
+    size.height = window.innerHeight
+    // Обновляем соотношение сторон
+    camera.aspect = size.width / size.height
+    // при изменении св-ва камеры необходимо обновить матрицу проекции !!!
+    camera.updateProjectionMatrix()
+    
+    // перерисовка и обработка соотношения пикселей для девайса
+    renderer.setSize(size.width, size.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
 // Камера и её позиция
 // const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 1);
 const camera = new THREE.OrthographicCamera(-1, 1, 1, - 1, 0.1, 200);
@@ -44,32 +58,20 @@ controls.enableDamping = true
 mesh.rotation.x = Math.PI * 0.25
 mesh.rotation.y = Math.PI * 0.25
 
-const cursor = {
-    x: 0,
-    y: 0,
-}
-// canvasElem.addEventListener("mousemove", (event) => {
-//     cursor.x = -(event.clientX / size.width - 0.5)
-//     cursor.y = event.clientY / size.height - 0.5
-//     console.log(event.clientX, event.clientY);
-// })
-
 const tick = () => {
     window.requestAnimationFrame(tick)
     controls.update()
     renderer.render(scene, camera)
-    // camera.position.x = Math.cos(cursor.x * Math.PI * 2) * 2
-    // camera.position.z = Math.sin(cursor.x * Math.PI * 2) * 2
-    // camera.position.y = cursor.y * 3
-    // camera.lookAt(mesh.position)
-    // cursor.x = event.clientX / size.width - 0.5
-    // cursor.y = event.clientY / size.height - 0.5
-    
-
 }
-
 tick()
 
+window.addEventListener('dblclick', () => {
+    if (!document.fullscreenElement) {
+        canvasElem.requestFullscreen()
+    } else {
+        document.exitFullscreen()
+    }
+})
 // // Отрисовка осей
 // const axesHelper = new THREE.AxesHelper(3)
 // scene.add(axesHelper)
