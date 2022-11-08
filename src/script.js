@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+
 import './style.css'
 
 const canvasElem = document.querySelector('canvas.canvas-js')
@@ -8,9 +9,30 @@ const gui = new dat.GUI({ closed: true, width: 400 })
 // Сцена
 const scene = new THREE.Scene()
 
+// Текстуры
+const loadingManager = new THREE.LoadingManager()
+loadingManager.onStart = () => {
+    console.log('loading started');
+} 
+loadingManager.onLoad = () => {
+    console.log('loading finished');
+}
+loadingManager.onProgress = () => {
+    console.log('loading progressing');
+}
+loadingManager.onError = () => {
+    console.log('loading error');
+}
+
+const textureLoader = new THREE.TextureLoader(loadingManager)
+const colorTexture = textureLoader.load('/textures/door/color.jpg')
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const heightTexture = textureLoader.load('/textures/door/height.png')
+const normalTexture = textureLoader.load('/textures/door/normal.jpg')
+
 // Объект и его геометрия и материал
 const geometry = new THREE.BoxGeometry(1,1,1,1)
-const material = new THREE.MeshBasicMaterial({color: 'purple', wireframe:true})
+const material = new THREE.MeshBasicMaterial({map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 const parameters = {
@@ -58,10 +80,6 @@ const clock = new THREE.Clock();
 
 const controls = new OrbitControls(camera, canvasElem)
 controls.enableDamping = true
-
-mesh.rotation.x = Math.PI * 0.25
-mesh.rotation.y = Math.PI * 0.25
-
 
 const tick = () => {
     window.requestAnimationFrame(tick)
