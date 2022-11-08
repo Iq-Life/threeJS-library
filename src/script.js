@@ -1,9 +1,10 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as dat from 'lil-gui'
 import './style.css'
 
 const canvasElem = document.querySelector('canvas.canvas-js')
-
+const gui = new dat.GUI({ closed: true, width: 400 })
 // Сцена
 const scene = new THREE.Scene()
 
@@ -12,6 +13,9 @@ const geometry = new THREE.BoxGeometry(1,1,1,1)
 const material = new THREE.MeshBasicMaterial({color: 'purple', wireframe:true})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
+const parameters = {
+    color: 0xff0000,
+}
 // Размеры сцены и отрисовщика
 const size = {
     width: window.innerWidth,
@@ -58,6 +62,7 @@ controls.enableDamping = true
 mesh.rotation.x = Math.PI * 0.25
 mesh.rotation.y = Math.PI * 0.25
 
+
 const tick = () => {
     window.requestAnimationFrame(tick)
     controls.update()
@@ -72,9 +77,15 @@ window.addEventListener('dblclick', () => {
         document.exitFullscreen()
     }
 })
-// // Отрисовка осей
-// const axesHelper = new THREE.AxesHelper(3)
-// scene.add(axesHelper)
+// helper panel
+gui.add(mesh.position, 'x', -3, 3, 0.01)
+gui.addColor(parameters, 'color')
+.onChange(() => {
+    material.color.set(parameters.color)
+})
+// Отрисовка вспомогательных осей
+const axesHelper = new THREE.AxesHelper(3)
+scene.add(axesHelper)
 
 // // Позиция камеры
 // camera.lookAt( new THREE.Vector3(0, 0, -1))
