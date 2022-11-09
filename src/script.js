@@ -30,8 +30,23 @@ const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
 const heightTexture = textureLoader.load('/textures/door/height.png')
 const normalTexture = textureLoader.load('/textures/door/normal.jpg')
 
+// Благодаря этому св-ву можно повторять текстуру
+// colorTexture.wrapS = THREE.RepeatWrapping
+// colorTexture.wrapT = THREE.RepeatWrapping
+// Повтор текстур
+// colorTexture.repeat.x = 3
+// colorTexture.repeat.y = 2
+// Вращение текстур
+colorTexture.rotation = Math.PI * 0.25
+// Центрировать текстуру
+colorTexture.center.x = 0.5;
+colorTexture.center.y = 0.5;
+// Смещение текстуры
+colorTexture.offset.x = -0.2
+colorTexture.offset.y = -0.1
+
 // Объект и его геометрия и материал
-const geometry = new THREE.BoxGeometry(1,1,1,1)
+const geometry = new THREE.BoxGeometry(1,2,2,1)
 const material = new THREE.MeshBasicMaterial({map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
