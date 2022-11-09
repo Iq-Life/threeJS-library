@@ -2,15 +2,15 @@
     margin: 0;
     padding: 0;
 }
-body {
-    /* width: 100vw;
+/* body {
+    width: 100vw;
     height: 100vh;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(130, 130, 194); */
-}
+    background-color: rgb(130, 130, 194);
+} */
 .canvas-js {
     position: fixed;
     top: 0;

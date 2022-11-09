@@ -5,7 +5,7 @@ import * as dat from 'lil-gui'
 import './style.css'
 
 const canvasElem = document.querySelector('canvas.canvas-js')
-const gui = new dat.GUI({ closed: true, width: 400 })
+const gui = new dat.GUI({ closed: true, width: 300 })
 // Сцена
 const scene = new THREE.Scene()
 
@@ -42,11 +42,21 @@ colorTexture.rotation = Math.PI * 0.25
 colorTexture.center.x = 0.5;
 colorTexture.center.y = 0.5;
 // Смещение текстуры
-colorTexture.offset.x = -0.2
-colorTexture.offset.y = -0.1
+// colorTexture.offset.x = -0.2
+// colorTexture.offset.y = -0.1
+
+// mip mapping
+// THREE.NearestFilter - увеличения текстуры с помощью свойства magFilter (лучший)
+// THREE.LinearFilter - увеличения текстуры с помощью свойства magFilter
+// THREE.LinearMipmapNearestFilter
+// THREE.LinearMipmapLinearFilter
+// THREE.NearestMipmapNearestFilter
+// THREE.NearestMipmapLinearFilter
+colorTexture.generateMipmaps = false;
+colorTexture.minFilter = THREE.NearestFilter;
 
 // Объект и его геометрия и материал
-const geometry = new THREE.BoxGeometry(1,2,2,1)
+const geometry = new THREE.BoxGeometry(1,1,1,1)
 const material = new THREE.MeshBasicMaterial({map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
