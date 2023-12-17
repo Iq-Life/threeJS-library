@@ -25,6 +25,6 @@
       "@utils/*": ["utils/*"]
     }
   },
-  "include": ["src", "declaration.d.ts"],
+  "include": ["src/**/*", "declaration.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
