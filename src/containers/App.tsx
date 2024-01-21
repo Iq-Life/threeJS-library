@@ -1,7 +1,10 @@
-import './App.css';
+import MyThreeScene from '@components/threeScene/MyThreeScene';
+import styles from './App.module.css';
 
-function App() {
-  return <div>ky f</div>;
-}
+const App = () => (
+  <div className={styles.wrapper}>
+    <MyThreeScene />
+  </div>
+);
 
 export default App;

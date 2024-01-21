@@ -1,0 +1,10 @@
+.convasContainer {
+  width: 90%;
+  height: 90%;
+}
+
+canvas {
+  border: 3px double black;
+  width: 80%;
+  height: 80%;
+}
